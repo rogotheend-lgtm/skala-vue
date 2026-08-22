@@ -1,0 +1,19 @@
+@import './base.css';
+
+#app {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 36px 24px 48px;
+  font-weight: normal;
+}
+
+body {
+  min-width: 320px;
+  background: linear-gradient(145deg, #f8fbff 0%, #eef5ff 48%, #f8fafc 100%);
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
