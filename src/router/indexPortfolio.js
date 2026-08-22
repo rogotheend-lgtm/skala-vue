@@ -1,7 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: import.meta.env.BASE_URL === '/skala-vue/'
+    ? createWebHashHistory(import.meta.env.BASE_URL)
+    : createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'Dashboard', component: () => import('@/views/portfolio/DashboardView.vue') },
     { path: '/weather', name: 'Weather', component: () => import('@/views/store/WeatherStoreHomeView.vue') },

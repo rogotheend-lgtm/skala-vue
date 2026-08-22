@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import process from 'node:process'
 
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -9,28 +10,29 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
-  plugins: [
-    vue(),
-    vueDevTools(),
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+    base: process.env.GITHUB_ACTIONS ? '/skala-vue/' : '/',
+    plugins: [
+      vue(),
+      vueDevTools(),
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
     },
-  },
-  server: {
-    proxy: {
-      '/krx-api': {
-        target: 'https://data-dbg.krx.co.kr',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/krx-api/, ''),
-        configure: (proxy) => {
-          proxy.on('proxyReq', (proxyRequest) => {
-            proxyRequest.setHeader('AUTH_KEY', env.VITE_KRX_AUTH_KEY)
-          })
+    server: {
+      proxy: {
+        '/krx-api': {
+          target: 'https://data-dbg.krx.co.kr',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/krx-api/, ''),
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyRequest) => {
+              proxyRequest.setHeader('AUTH_KEY', env.VITE_KRX_AUTH_KEY)
+            })
+          },
         },
       },
     },
-  },
   }
 })
