@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const krxApi = axios.create({
-  baseURL: '/krx-api/svc/apis/sto',
+  baseURL: '/api',
   timeout: 15000,
 })
 
@@ -24,7 +24,7 @@ function getKoreaToday() {
 }
 
 export async function getKosdaqDailyTrading(baseDate) {
-  const response = await krxApi.get('/ksq_bydd_trd', {
+  const response = await krxApi.get('/krx', {
     params: { basDd: baseDate },
   })
   return response.data?.OutBlock_1 ?? []

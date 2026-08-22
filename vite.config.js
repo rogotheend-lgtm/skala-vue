@@ -22,13 +22,13 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
-        '/krx-api': {
+        '/api/krx': {
           target: 'https://data-dbg.krx.co.kr',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/krx-api/, ''),
+          rewrite: () => '/svc/apis/sto/ksq_bydd_trd',
           configure: (proxy) => {
             proxy.on('proxyReq', (proxyRequest) => {
-              proxyRequest.setHeader('AUTH_KEY', env.VITE_KRX_AUTH_KEY)
+              proxyRequest.setHeader('AUTH_KEY', env.KRX_AUTH_KEY || env.VITE_KRX_AUTH_KEY)
             })
           },
         },
